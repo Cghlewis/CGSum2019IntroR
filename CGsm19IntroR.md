@@ -283,7 +283,8 @@ names(IMDB)
 
 ``` r
 #What type of variable is gross revenue
-#To access variables in a dataframe you can use the $ notation or [column,row] bracket notation
+#To access variables by name in a dataframe you can use the $ notation
+#Or to extract variables by location you can use the [row, column] bracket notation
 class(IMDB$gross)
 ```
 
