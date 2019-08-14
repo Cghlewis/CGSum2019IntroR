@@ -54,7 +54,10 @@ Comments are made using \#
 Make a small data frame
 -----------------------
 
-A data frame is like a dataset, 2 dimensional data structure, rows and columns. First let's make 3 variables The : provides a sequence of values The c() means to combine values into a vector or list
+A data frame is like a dataset, 2 dimensional data structure, rows and columns.
+First let's make 3 variables.
+The : provides a sequence of values.
+The c() means to combine values into a vector or list.
 
 ``` r
 #Create 3 variables I want in my data frame
@@ -111,11 +114,13 @@ summary(df)
     ##              3rd Qu.:26.00   3rd Qu.:2.5  
     ##              Max.   :37.00   Max.   :3.0
 
-You can also make your data frame in one step
+You can also make your data frame in one step.
 
 ``` r
 #Create 3 variables I want in my data frame
 df2 <- data.frame("Name" = c("Crystal","Fox", "Oscar"), "Age" = c(37,1,15), "Assigned ID" = 1:3)
+#Notice the "." between Assigned and ID, R doesn't like spaces between variable names so it adds a .
+#Best practice is to create names with no spaces (can use _ or .)
 df2
 ```
 
@@ -124,15 +129,10 @@ df2
     ## 2     Fox   1           2
     ## 3   Oscar  15           3
 
-``` r
-#Notice the "." between Assigned and ID, R doesn't like spaces between variable names so it adds a .
-#Best practice is to create names with no spaces (can use _ or .)
-```
-
 Load in data
 ------------
 
-We don't usually create our dataframes from scratch. We usually collect the data from somewhere else and read it in.
+We don't usually create our data frames from scratch. We usually collect the data from somewhere else and read it in.
 
 First we need to change our directory to where we saved our IMDB file.
 
@@ -144,7 +144,7 @@ getwd()
 
 We need to change our working directory. Session-&gt;Set Working Directory-&gt;Choose Directory
 
-We want to load in an excel file but loading in excel files aren't actually native to R (only txt, csv and other basic table files with no formatting). So we need a package to be able to load in an excel file.
+We want to load in an excel file but loading in excel files isn't actually native to R (only txt, csv and other basic table files with no formatting). So we need a package to be able to load in an excel file.
 
 Before calling a package, we need to install it. We are going to use the package `readxl`.
 
@@ -156,7 +156,7 @@ install.packages("readxl")
 library(readxl)
 ```
 
-Now we can read in our IMDB dataset into a data frame called "IMDB".
+Now we can read our IMDB dataset into a data frame called "IMDB".
 
 ``` r
 IMDB <- read_excel("IMDBMovieMetadata.xlsx")
@@ -346,16 +346,16 @@ plot(IMDB2$budget, IMDB2$imdb_score)
 
 ![](CGsm19IntroR_files/figure-markdown_github/unnamed-chunk-18-1.png)
 
-``` r
-#There is a crazy outlier here that is skewing our chart, some movie had a budget over 12billion dollars. Could be an error in the data. So let's narrow our data to one year of data (I know that 2016 doesn't have this outlier)
+There is a crazy outlier here that is skewing our chart, some movie had a budget over 12billion dollars. Could be an error in the data. So let's narrow our data to one year of data (I know that 2016 doesn't have this outlier)
 
+``` r
 IMDB2016<-subset(IMDB2, title_year==2016)
 
 
 plot(IMDB2016$budget, IMDB2016$imdb_score)
 ```
 
-![](CGsm19IntroR_files/figure-markdown_github/unnamed-chunk-18-2.png)
+![](CGsm19IntroR_files/figure-markdown_github/unnamed-chunk-19-1.png)
 
 ### (4)Which country had the highest average gross revenue for movies in 2016?
 
@@ -374,7 +374,9 @@ library(ggplot2)
 ggplot(data=IMDB2016, aes(x=country,y=gross))+stat_summary(fun.y="mean", geom="bar")
 ```
 
-![](CGsm19IntroR_files/figure-markdown_github/unnamed-chunk-21-1.png) Lesson in deceiving statistics. Japan only had 2 movies in 2016 while the USA had 75 films.
+![](CGsm19IntroR_files/figure-markdown_github/unnamed-chunk-22-1.png)
+
+Lesson in deceiving statistics. Japan only had 2 movies in 2016 while the USA had 75 films.
 
 ``` r
 table(IMDB2016$country)
@@ -386,9 +388,10 @@ table(IMDB2016$country)
     ##      Mexico      Panama South Korea          UK         USA 
     ##           1           1           2          13          75
 
+Japan had one film that grossed around 300million and the other has no gross info. So the mean is based off of only one film.
+
 ``` r
 IMDBJapan2016<-subset(IMDB2016, country=="Japan")
-#Japan had one film that grossed around 300million and the other has no gross info. So the mean is based off of only one film.
 table(IMDBJapan2016$gross)
 ```
 
@@ -396,10 +399,12 @@ table(IMDBJapan2016$gross)
     ## 323505540 
     ##         1
 
+USA had 75 films ranging from $560k to $400m
+
 ``` r
 IMDBUSA2016<-subset(IMDB2, country=="USA")
-#USA had 75 films ranging from $560k to $400m
+
 ggplot(data=IMDBUSA2016, aes(x=gross))+geom_histogram()
 ```
 
-![](CGsm19IntroR_files/figure-markdown_github/unnamed-chunk-22-1.png)
+![](CGsm19IntroR_files/figure-markdown_github/unnamed-chunk-25-1.png)
