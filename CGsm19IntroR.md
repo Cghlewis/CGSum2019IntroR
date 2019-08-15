@@ -164,7 +164,7 @@ IMDB <- read_excel("IMDBMovieMetadata.xlsx")
 #We can view the dataset
 View(IMDB)
 
-#Note that if I wrote the word view with a lowercase v, the command would not work
+#Note that if I wrote the word "view"" with a lowercase v, the command would not work
 #Or if I wrote "imdb" rather than "IMDB" the command would not run
 #R is case sensitive
 ```
@@ -403,9 +403,17 @@ table(IMDBJapan2016$gross)
 USA had 75 films ranging from $560k to $400m
 
 ``` r
-IMDBUSA2016<-subset(IMDB2, country=="USA")
+IMDBUSA2016<-subset(IMDB2016, country=="USA")
 
 ggplot(data=IMDBUSA2016, aes(x=gross))+geom_histogram()
 ```
 
 ![](CGsm19IntroR_files/figure-markdown_github/unnamed-chunk-25-1.png)
+
+Last, if I wanted to export any of the datasets I have manipulated or created, I could use the following code to export, for example, an excel file to our working directory, using a package such as the `xlsx` package.
+
+``` r
+install.packages("xlsx")
+library(xlsx)
+write.xlsx(IMDBUSA2016, file="IMDB2016forUSA.xlsx") 
+```
